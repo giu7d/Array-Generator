@@ -8,17 +8,16 @@ class ArrayGenerator
   private:
     int *array;
     int size;
-    int getRndNumber(); //Rnd Number
-    void rndArray();    //Rnd Array
+    void rndArray(); 
     int multply(int input, int size);
-    //int sum(int input, int size);
+    int getRndNumber(); 
 
   public:
     ArrayGenerator(int sz);
     ~ArrayGenerator();
+    void printArray();
     int getSize();
-    void getArray();
-    void outFile(std::string fileName);
+    int* getArray();
 };
 
 #endif

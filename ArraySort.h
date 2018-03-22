@@ -3,18 +3,20 @@
 
 class ArraySort
 {
-  private:
-    int *array;
-    int size;
+    private:
+        int* array;
+        int size;
+        void swap(int *arrayX, int *arrayY);
 
-  public:
-    ArraySort(int *a, int s);
-    ~ArraySort();
-    int* bubbleSort();
-    int* insertSort();
-    void printArray();
-    int *getArray();
-    int getSize();
+      public:
+        ArraySort(int* a, int s);
+        ~ArraySort();
+        void shellSort();
+        void selectionSort();
+        void reverseArray();
+        void printArray();
+        int *getArray();
+        int getSize();
 };
 
 #endif

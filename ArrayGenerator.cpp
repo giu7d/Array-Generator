@@ -16,9 +16,7 @@ ArrayGenerator::ArrayGenerator(int sz)
 
 ArrayGenerator::~ArrayGenerator(void)
 {
-    delete[] array;
-    cout << endl
-         << "Objeto Deletado" << endl;
+    // delete[] array;
 }
 
 void ArrayGenerator::rndArray()
@@ -54,24 +52,17 @@ int ArrayGenerator::getRndNumber()
     clock_t init = clock();
     int clocker = 0;
 
-    //R1
-    for (int i = 0; i < 3333; i++)
-        for (int j = 0; j < 3333; j++)
+    
+    for (int i = 0; i < 1000; i++)
+        for (int j = 0; j < 1000; j++)
             int aux = (i * j);
 
     double ck1 = (double)((clock() - init) * 1000) / CLOCKS_PER_SEC;
-    clocker = (int)((clock() - ck1) + 500000) / 100;
-
-    //R2
-    for (int i = 0; i < clocker; i++)
-        for (int j = 0; j < 3333; j++)
-            int aux = (i * j) - (i * j);
-
+    clocker = (int)((clock() - ck1) + rand()) / 100;
     double ck2 = (double)((clock() - init) * 1000) / CLOCKS_PER_SEC;
     clocker += (ck1 * ck1);
 
-    return rand() % multply(clocker, 10000);
-    // return rand() % (ck0 - ck1 + 1) + ck1;
+    return rand() % multply(clocker, 1000000);
 }
 
 int ArrayGenerator::getSize(void)
@@ -79,27 +70,15 @@ int ArrayGenerator::getSize(void)
     return size;
 }
 
-void ArrayGenerator::getArray(void)
+int* ArrayGenerator::getArray(void)
+{
+    return array;
+}
+
+void ArrayGenerator::printArray(void)
 {
     for (int i = 0; i < size; i++)
     {
         cout << endl << i << " - " << array[i] << endl;
     }
-}
-
-void ArrayGenerator::outFile(std::string str)
-{
-
-    str.insert(str.size(), ".txt");
-
-    std::ofstream out(str.c_str());
-
-    out << ">" << size;
-
-    for (int i = 0; i < size; i++)
-    {
-        out << ":" << array[i];
-    }
-
-    out.close();
 }

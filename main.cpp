@@ -3,78 +3,58 @@
 #include <string>
 
 #include "ArrayGenerator.h"
-#include "ArrayReader.h"
 #include "ArraySort.h"
 
 using namespace std;
 
-//Import file function
-std::string getMemorieString(std::string str)
+void outFile(int *array, int size, std::string file_name, std::string file_ext)
 {
-    std::string str_mem;
-    streampos size;
-    char *memblock;
 
-    str.insert(str.size(), ".txt");
+    file_name.insert(file_name.size(), file_ext.c_str());
 
-    ifstream file(str.c_str(), ios::in | ios::binary | ios::ate);
+    std::ofstream out(file_name.c_str());
 
-    if (file.is_open())
+    out << ">" << size;
+
+    for (int i = 0; i < size; i++)
     {
-        size = file.tellg();
-        memblock = new char[size];
-
-        file.seekg(0, ios::beg);
-        file.read(memblock, size);
-        file.close();
-
-        str_mem = memblock;
-
-        delete[] memblock;
-
-        return str_mem;
+        out << ":" << array[i];
     }
 
-    else
-        return NULL;
+    out.close();
 }
-
 
 int main()
 {
-    std::string file;
-    cin >> file;
-
-    std::string str_array = getMemorieString(file);
-
-    ArrayReader reader(str_array);
-    ArraySort array_sort(reader.getArray(), reader.getSize());
-
-    int *ar = new int[array_sort.getSize()];
-    ar = array_sort.insertSort();
-
-    cout << "Fora de Ordem:" << endl;
-    reader.printArray();
-
-    cout << "Bubble Sort:" << endl;
+    int file_size;
+    std::string file_name;
+    std::string file_ext;
     
-    for(int i = 0; i < array_sort.getSize(); i++){
-        cout << ar[i] << endl;
-    }
-
-    // cout << endl << arr[0] << endl;
-    // cout << arr[1] << endl;
-    // cout << arr[2] << endl;
-
-    // ArraySort b(arr, reader.getSize());
+    cout << "Nome do Arquivo: " << endl;
+    cin >> file_name;
+    cout << "Tamanho do Arquivo: " << endl;
+    cin >> file_size;
     
-    // cout << "Fora de Ordem:" << endl;
-    // b.printArray();
-    // b.insertSort();
-    // cout << "Insert Sort:" << endl;
-    // b.printArray();
 
-    delete[] ar;
+    ArrayGenerator gen(file_size);
+    ArraySort sort(gen.getArray(),gen.getSize());
+
+    //RND
+    file_ext = "_rnd.txt";
+    outFile(gen.getArray(), gen.getSize(), file_name, file_ext);
+    cout << endl << "Gerado ./" << file_name << file_ext << endl; 
+
+    //ORD
+    file_ext = "_ord.txt";
+    sort.shellSort();
+    outFile(sort.getArray(), sort.getSize(), file_name, file_ext);
+    cout << endl << "Gerado ./" << file_name << file_ext << endl;     
+    
+    //INV
+    file_ext = "_inv.txt";
+    sort.reverseArray();
+    outFile(sort.getArray(), sort.getSize(), file_name, file_ext);
+    cout << endl << "Gerado ./" << file_name << file_ext << endl;
 
     return 0;
 }
